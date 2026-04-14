@@ -58,9 +58,9 @@ s2() {
 }
 
 s2b() {
-    section "CodeQL Query Suite — Standard + SAILOR Custom"
-    echo -e "${YELLOW}SAILOR runs the stock CodeQL C/C++ pack (13 queries) alongside${RESET}"
-    echo -e "${YELLOW}its own custom pack (21 queries) — 34 total in the suite.${RESET}"
+    section "Full Query Suite — Standard + SAILOR Custom"
+    echo -e "${YELLOW}The rule you just saw is one of 34. SAILOR runs the stock CodeQL${RESET}"
+    echo -e "${YELLOW}C/C++ pack (13 queries) alongside its own custom pack (21 queries).${RESET}"
     echo ""
     cat "$DATA/rules_list.txt"
 }
@@ -220,7 +220,7 @@ s15() {
     echo "  - Fuzz harness + result    (fuzz_harness.c, fuzz_asan_output.txt)"
 }
 
-SECTIONS=(s0 s1 s2 s2b s3 s4 s5 s5b s6 s7 s8 s6b s9 s10 s11 s12 s13 s15)
+SECTIONS=(s0 s1 s2 s3 s2b s4 s5 s5b s6 s7 s8 s6b s9 s10 s11 s12 s13 s15)
 TOTAL=${#SECTIONS[@]}
 i=0
 
