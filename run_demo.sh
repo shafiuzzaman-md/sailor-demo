@@ -32,8 +32,6 @@ DEMO_SPEC="1310_tif_write.c_503_sailor_cpp_cwe-416-use-after-realloc"
 
 s0() {
     section "SAILOR: Static Analysis Informed LLM-Orchestrated Symbolic Execution"
-    echo "A fully automated vulnerability discovery pipeline for C/C++ codebases."
-    echo ""
     echo "Phases: CodeQL → Spec Gen → LLM Harness → KLEE → ASan (+ optional libFuzzer)"
     echo ""
     echo "Demo target: libtiff (commit f324415)"
@@ -53,15 +51,10 @@ s2() {
     echo ""
     echo -e "${GREEN}# Step 2: Run the LLM agent pipeline${RESET}"
     echo '$ LLM_MODEL=gpt-5 ./sailor.sh f324415/libtiff_f324415_vul'
-    echo ""
-    echo "(Both steps are fully automated — no manual intervention needed.)"
 }
 
 s2b() {
     section "Full Query Suite — Standard + SAILOR Custom"
-    echo -e "${YELLOW}The rule you just saw is one of 34. SAILOR runs the stock CodeQL${RESET}"
-    echo -e "${YELLOW}C/C++ pack (13 queries) alongside its own custom pack (21 queries).${RESET}"
-    echo ""
     cat "$DATA/rules_list.txt"
 }
 
@@ -76,7 +69,7 @@ s3() {
 
 s4() {
     section "Static Analysis Output (CodeQL findings)"
-    echo -e "${YELLOW}(In a real SAILOR run these all land in sa_outputs/<project>/)${RESET}"
+    echo -e "${GREEN}\$ ls sa_outputs/libtiff_f324415_vul/${RESET}"
     echo ""
     cat <<'EOF'
 codeql-results.sarif   codeql_rule_time.csv   codeql_time.log
@@ -94,10 +87,7 @@ EOF
 }
 
 s5() {
-    section "Vulnerability Spec (LLM input — findings + facts merged)"
-    echo -e "${YELLOW}Each CodeQL finding is turned into a single self-contained JSON${RESET}"
-    echo -e "${YELLOW}that the LLM agent consumes.${RESET}"
-    echo ""
+    section "Vulnerability Spec (LLM input)"
     echo -e "${GREEN}\$ cat data/vul_spec.json${RESET}"
     echo ""
     python3 -m json.tool < "$DATA/vul_spec.json"
@@ -105,21 +95,13 @@ s5() {
 
 s8() {
     section "LLM-Generated Harness: Sliced Vulnerable Source"
-    echo "Spec id: ${DEMO_SPEC}"
-    echo "Bug: heap-use-after-free in tif_write.c:503 (CWE-416)"
-    echo ""
     echo -e "${GREEN}\$ cat data/harness/tif_write.c${RESET}"
     echo ""
     cat "$HARNESS/tif_write.c"
 }
 
 s5b() {
-    section "LLM Agent Loop — Turns, Tool Calls, and Refinement"
-    echo -e "${YELLOW}SAILOR feeds the spec to an LLM agent that calls tools (ReadSAContext,${RESET}"
-    echo -e "${YELLOW}GatherCode, WriteHarness, WriteDriver, CompileSlice). KLEE feedback${RESET}"
-    echo -e "${YELLOW}drives refinement — here Turn 6 rewrites the driver after KLEE flags${RESET}"
-    echo -e "${YELLOW}an unsatisfiable klee_assume from Turn 4.${RESET}"
-    echo ""
+    section "LLM Agent Loop — Turns, Tool Calls, Refinement"
     echo -e "${GREEN}\$ cat data/llm_transcript.log${RESET}"
     echo ""
     cat "$DATA/llm_transcript.log"
@@ -127,9 +109,6 @@ s5b() {
 
 s6() {
     section "LLM-Generated Harness: KLEE Driver (symbolic)"
-    echo -e "${YELLOW}Symbolic entry point — KLEE explores paths that may realloc${RESET}"
-    echo -e "${YELLOW}tif->tif_dir and then dereference the stale 'td' on line 503.${RESET}"
-    echo ""
     echo -e "${GREEN}\$ cat data/harness/klee_driver.c${RESET}"
     echo ""
     cat "$HARNESS/klee_driver.c"
@@ -137,9 +116,6 @@ s6() {
 
 s6b() {
     section "Reproducer (concrete replay, built with ASan)"
-    echo -e "${YELLOW}Once KLEE finds a crashing path it emits a ktest. SAILOR then${RESET}"
-    echo -e "${YELLOW}bakes those bytes into this standalone C driver for ASan replay.${RESET}"
-    echo ""
     echo -e "${GREEN}\$ cat data/concrete/reproducer.c${RESET}"
     echo ""
     cat "$CONCRETE/reproducer.c"
@@ -147,9 +123,6 @@ s6b() {
 
 s7() {
     section "LLM-Generated Harness: Trimmed Types"
-    echo -e "${YELLOW}The LLM pares libtiff's opaque TIFF / TIFFDirectory structs${RESET}"
-    echo -e "${YELLOW}down to just the fields the slice actually touches.${RESET}"
-    echo ""
     echo -e "${GREEN}\$ cat data/harness/harness_types.h${RESET}"
     echo ""
     cat "$HARNESS/harness_types.h"
@@ -160,8 +133,6 @@ s9() {
     echo -e "${GREEN}\$ cat data/concrete/asan_output.txt${RESET}"
     echo ""
     head -30 "$CONCRETE/asan_output.txt"
-    echo ""
-    echo -e "${RED}▲ heap-use-after-free CONFIRMED against the real, unmodified libtiff.a!${RESET}"
 }
 
 s10() {
