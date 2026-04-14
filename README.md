@@ -36,7 +36,8 @@ ENTER / `n` = next, `b` = back, `q` = quit, `<number>` = jump to that section.
 | `run_demo.sh` | Interactive terminal demo (ENTER to advance) |
 | `DEMO_SCRIPT.md` | Full written walkthrough with speaker commentary |
 | `data/libtiff_config.sh` | The project config SAILOR consumes |
-| `data/CWE-416_UseAfterRealloc.ql` | CodeQL rule that flagged the bug |
+| `data/rules_list.txt` | Full SAILOR CodeQL rule pack (21 queries) |
+| `data/CWE-416_UseAfterRealloc.ql` | CodeQL rule that flagged the demo bug |
 | `data/findings.jsonl` | CodeQL static-analysis findings (1,491 entries) |
 | `data/vul_spec.json` | Single-finding spec (LLM input) |
 | `data/llm_transcript.log` | Agent-loop transcript: prompts, tool calls, KLEE-driven refinement |

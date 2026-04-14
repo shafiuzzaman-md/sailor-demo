@@ -1,0 +1,27 @@
+rules/sailor-queries/queries/
+├── CWE-120_BufferOverflow.ql
+├── CWE-120_StackBufferOverflow_SprintfSnprintf.ql
+├── CWE-125_CursorLookaheadRead_MissingRemainingBytesCheck.ql
+├── CWE-125_OutOfBoundsRead.ql
+├── CWE-416_UseAfterFree_FreeThenCallArg.ql
+├── CWE-416_UseAfterFree_FreeThenDeref.ql
+├── CWE-416_UseAfterFree_FreeThenReturn.ql
+├── CWE-416_UseAfterFree_FreeThenUse.ql
+├── CWE-416_UseAfterFree_LookupRemoveUse.ql
+├── CWE-416_UseAfterRealloc.ql                  ← used in this demo
+├── CWE-476_NullDeref_UncheckedReturn.ql
+├── CWE-674_UncontrolledRecursion.ql
+├── CWE-787_OutOfBoundsWrite.ql
+├── CWE-823_OutOfRangePointerOffset.ql
+├── KernelExploitTarget_FuncPtrInReclaimableStruct.ql
+├── KernelLifecycleMismatch_DeviceRefcount.ql
+├── WMI-1_StaleReference_FreeWithoutInvalidation.ql
+├── WMI-1b_StaleReference_IncompleteUnlink.ql
+├── WMI-2_TypeConfusionLeak_StaleDeref.ql
+├── WMI-3_ArbitraryFree_StaleTraversal.ql
+└── WMI-4_WriteWhatWhere_ReclaimOverwrite.ql
+
+21 queries total:
+  - Classic memory-safety CWEs  (120, 125, 416, 476, 674, 787, 823)
+  - Kernel-specific patterns     (KernelExploitTarget, KernelLifecycleMismatch)
+  - Weak-Memory-Invalidation     (WMI-1 … WMI-4)

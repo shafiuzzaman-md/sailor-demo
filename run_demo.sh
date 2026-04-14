@@ -57,6 +57,16 @@ s2() {
     echo "(Both steps are fully automated — no manual intervention needed.)"
 }
 
+s2b() {
+    section "CodeQL Rule Pack — SAILOR Queries"
+    echo -e "${YELLOW}SAILOR ships a custom CodeQL pack that extends the stock queries${RESET}"
+    echo -e "${YELLOW}with memory-safety, kernel, and weak-memory-invalidation patterns.${RESET}"
+    echo ""
+    echo -e "${GREEN}\$ ls rules/sailor-queries/queries/${RESET}"
+    echo ""
+    cat "$DATA/rules_list.txt"
+}
+
 s3() {
     section "CodeQL Rule (CWE-416 Use-After-Realloc)"
     echo -e "${GREEN}\$ cat data/CWE-416_UseAfterRealloc.ql${RESET}"
@@ -212,7 +222,7 @@ s15() {
     echo "  - Fuzz harness + result    (fuzz_harness.c, fuzz_asan_output.txt)"
 }
 
-SECTIONS=(s0 s1 s2 s3 s4 s5 s5b s6 s7 s8 s6b s9 s10 s11 s12 s13 s15)
+SECTIONS=(s0 s1 s2 s2b s3 s4 s5 s5b s6 s7 s8 s6b s9 s10 s11 s12 s13 s15)
 TOTAL=${#SECTIONS[@]}
 i=0
 
