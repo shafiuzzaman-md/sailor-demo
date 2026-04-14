@@ -23,8 +23,11 @@ cd sailor-demo
 bash run_demo.sh
 ```
 
-Press ENTER to advance through 11 sections. Each section displays a real file
+Press ENTER to advance through the sections. Each one displays a real file
 from the libtiff experiment with colored terminal output.
+
+Navigation (not shown on screen so it stays clean for live presentations):
+ENTER / `n` = next, `b` = back, `q` = quit, `<number>` = jump to that section.
 
 ## Files
 
@@ -54,20 +57,25 @@ from the libtiff experiment with colored terminal output.
 
 ## Demo Structure
 
-| # | Section | Time | What You Show |
-|---|---------|------|---------------|
-| 1 | Title + Overview | 1 min | Pipeline diagram |
-| 2 | Input | 1 min | Project config, two commands to run |
-| 3 | CodeQL Output | 1.5 min | findings.jsonl, sample finding |
-| 3b | CodeQL Rule | 1 min | CWE-416_UseAfterRealloc.ql query |
-| 4 | LLM Harness | 2 min | Sliced tif_write.c |
-| 5 | Reproducer | 1 min | KLEE-generated reproducer.c |
-| 6 | ASan Confirmation | 1.5 min | Full crash trace |
-| 7 | Result JSON | 0.5 min | Structured result |
-| 8 | Fuzz Reproduction | 1 min | fuzz_harness.c, libFuzzer crash |
-| 9 | Bug Report | 1 min | REPORT.md |
-| 10 | Summary Table | 0.5 min | confirmed_summary.tsv |
-| 11 | Artifact Tree | 0.5 min | Directory listing |
+| Section | Shows |
+|---------|-------|
+| Title + Overview | Pipeline phases, demo target |
+| Input — Project Config | `libtiff_config.sh` |
+| How to Run SAILOR | Two-command invocation |
+| CodeQL Rule | `CWE-416_UseAfterRealloc.ql` query body |
+| CodeQL Findings | `findings.jsonl` count + first entry |
+| Vulnerability Spec | Per-finding JSON fed to the LLM |
+| LLM Agent Loop | Turn-by-turn transcript with KLEE-driven refinement |
+| KLEE Driver (symbolic) | `klee_driver.c` — symbolic entry |
+| Trimmed Types | `harness_types.h` — pared-down structs |
+| Sliced Vulnerable Source | `tif_write.c` |
+| Reproducer | `reproducer.c` — concrete replay driver |
+| ASan Crash Confirmation | Real crash trace against `libtiff.a` |
+| Structured Result | `result.json` |
+| Fuzz Harness | `fuzz_harness.c` |
+| Fuzz Result | libFuzzer crash + summary |
+| All Confirmed Bugs | `confirmed_summary.tsv` |
+| Summary | Input & output artifact overview |
 
 ## Featured Bug
 
