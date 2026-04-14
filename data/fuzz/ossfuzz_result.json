@@ -1,0 +1,8 @@
+{
+  "verdict": "FUZZ_REPRODUCED",
+  "asan_triggered": true,
+  "error_type": "heap-use-after-free",
+  "compiled": true,
+  "total_seed_bytes": 20,
+  "fuzz_seconds": 30
+}

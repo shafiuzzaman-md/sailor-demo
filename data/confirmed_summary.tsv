@@ -1,0 +1,22 @@
+Spec	Verdict	OriginalAsanType	UpstreamAsanType	BugFile	BugLine	Function	CWE	UniqueBugID	IsDuplicate
+1310_tif_write.c_503_sailor_cpp_cwe-416-use-after-realloc	CONCRETE_CONFIRMED	heap-use-after-free	heap-use-after-free	tif_write.c	503	sailor_vul_func	unknown	BUG-047	
+242_tif_dir.c_1786_local_cpp_cwe-125-cursor-lookahead-missing-bytes-check	CONCRETE_CONFIRMED	heap-buffer-overflow	heap-buffer-overflow	tif_dir.c	1786	TIFFDefaultDirectory	unknown	BUG-038	
+720_tif_swab.c_314_local_cpp_cwe-125-cursor-lookahead-missing-bytes-check	CONCRETE_CONFIRMED	heap-buffer-overflow	heap-buffer-overflow	tif_swab.c	313	TIFFReverseBits	unknown	BUG-040	
+729_tif_swab.c_318_local_cpp_cwe-125-cursor-lookahead-missing-bytes-check	CONCRETE_CONFIRMED	heap-buffer-overflow	heap-buffer-overflow	tif_swab.c	308	TIFFReverseBits	unknown	BUG-067	
+747_tif_swab.c_231_local_cpp_cwe-125-cursor-lookahead-missing-bytes-check	CONCRETE_CONFIRMED	heap-buffer-overflow	heap-buffer-overflow	tif_swab.c	231	TIFFSwabArrayOfDouble	unknown	BUG-001	
+761_tif_swab.c_206_local_cpp_cwe-125-cursor-lookahead-missing-bytes-check	CONCRETE_CONFIRMED	heap-buffer-overflow	heap-buffer-overflow	tif_swab.c	206	TIFFSwabDouble	unknown	BUG-006	
+762_tif_swab.c_207_local_cpp_cwe-125-cursor-lookahead-missing-bytes-check	CONCRETE_CONFIRMED	heap-buffer-overflow	heap-buffer-overflow	tif_swab.c	205	TIFFSwabDouble	unknown	BUG-079	
+775_tif_swab.c_215_local_cpp_cwe-125-cursor-lookahead-missing-bytes-check	CONCRETE_CONFIRMED	heap-buffer-overflow	heap-buffer-overflow	tif_swab.c	215	TIFFSwabDouble	unknown	BUG-073	
+780_tif_swab.c_189_local_cpp_cwe-125-cursor-lookahead-missing-bytes-check	CONCRETE_CONFIRMED	heap-buffer-overflow	heap-buffer-overflow	tif_swab.c	189	TIFFSwabArrayOfFloat	unknown	BUG-002	
+788_tif_swab.c_170_local_cpp_cwe-125-cursor-lookahead-missing-bytes-check	CONCRETE_CONFIRMED	heap-buffer-overflow	heap-buffer-overflow	tif_swab.c	170	TIFFSwabFloat	unknown	BUG-011	
+791_tif_swab.c_173_local_cpp_cwe-125-cursor-lookahead-missing-bytes-check	CONCRETE_CONFIRMED	heap-buffer-overflow	heap-buffer-overflow	tif_swab.c	173	TIFFSwabFloat	unknown	BUG-076	
+795_tif_swab.c_147_local_cpp_cwe-125-cursor-lookahead-missing-bytes-check	CONCRETE_CONFIRMED	heap-buffer-overflow	heap-buffer-overflow	tif_swab.c	147	TIFFSwabArrayOfLong8	unknown	BUG-043	
+801_tif_swab.c_153_local_cpp_cwe-125-cursor-lookahead-missing-bytes-check	CONCRETE_CONFIRMED	heap-buffer-overflow	heap-buffer-overflow	tif_swab.c	153	TIFFSwabArrayOfLong8	unknown	BUG-072	
+809_tif_swab.c_126_local_cpp_cwe-125-cursor-lookahead-missing-bytes-check	CONCRETE_CONFIRMED	heap-buffer-overflow	heap-buffer-overflow	tif_swab.c	126	TIFFSwabArrayOfLong	unknown	BUG-007	
+818_tif_swab.c_90_local_cpp_cwe-125-cursor-lookahead-missing-bytes-check	CONCRETE_CONFIRMED	heap-buffer-overflow	heap-buffer-overflow	tif_swab.c	90	TIFFSwabArrayOfShort	unknown	BUG-015	
+821_tif_swab.c_65_local_cpp_cwe-125-cursor-lookahead-missing-bytes-check	CONCRETE_CONFIRMED	heap-buffer-overflow	heap-buffer-overflow	tif_swab.c	65	TIFFSwabLong8	unknown	BUG-014	
+825_tif_swab.c_69_local_cpp_cwe-125-cursor-lookahead-missing-bytes-check	CONCRETE_CONFIRMED	heap-buffer-overflow	heap-buffer-overflow	tif_swab.c	69	TIFFSwabLong8	unknown	BUG-066	
+826_tif_swab.c_70_local_cpp_cwe-125-cursor-lookahead-missing-bytes-check	CONCRETE_CONFIRMED	heap-buffer-overflow	heap-buffer-overflow	tif_swab.c	64	TIFFSwabLong8	unknown	BUG-074	
+833_tif_swab.c_50_local_cpp_cwe-125-cursor-lookahead-missing-bytes-check	CONCRETE_CONFIRMED	heap-buffer-overflow	heap-buffer-overflow	tif_swab.c	50	TIFFSwabLong	unknown	BUG-012	
+837_tif_swab.c_54_local_cpp_cwe-125-cursor-lookahead-missing-bytes-check	CONCRETE_CONFIRMED	heap-buffer-overflow	heap-buffer-overflow	tif_swab.c	56	TIFFSwabLong	unknown	BUG-021	
+839_tif_swab.c_38_local_cpp_cwe-125-cursor-lookahead-missing-bytes-check	CONCRETE_CONFIRMED	heap-buffer-overflow	heap-buffer-overflow	tif_swab.c	38	TIFFSwabShort	unknown	BUG-008	

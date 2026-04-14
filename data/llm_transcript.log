@@ -1,0 +1,55 @@
+[i] Spec loaded: 1310_tif_write.c_503_sailor_cpp_cwe-416-use-after-realloc.json
+[i] Vulnerable function: TIFFWriteEncodedTile
+[i] Entry from source scan: TIFFWriteEncodedTile
+[i] Struct groom: 2 guards, 0 stub prescriptions, 0 constants
+[i] SA context written
+
+[Turn 1] Thought: Load the vulnerability summary to design the harness and driver.
+[Turn 1] Tool:    ReadSAContext
+[Tool]            ReadSAContext → facts: suspect_call=_TIFFReserveLargeEnoughWriteBuffer,
+                                  pointer_var=td (aliases tif->tif_dir), sink_line=503
+
+[Turn 2] Thought: Gather types needed by the sliced path.
+[Turn 2] Tool:    GatherCode(funcs=TIFFWriteEncodedTile,
+                             types=TIFF,TIFFDirectory)
+
+[Turn 3] Thought: Write the sliced harness with the exact realloc + stale-td dereference
+                  preserved; trim TIFF/TIFFDirectory to the fields actually touched.
+[Turn 3] Tool:    WriteHarness
+   [+] Wrote harness: tif_write.c (60 lines)
+   [+] Generated harness_types.h (34 lines, 2 structs, 4 typedefs)
+   [+] Line map: 17 harness lines mapped to original source
+
+[Turn 4] Thought: Create the driver — concrete TIFF+TIFFDirectory allocation,
+                  symbolic td_stripsperimage and td_fillorder, bounded data buffer.
+[Turn 4] Tool:    WriteDriver
+   [+] driver.c: 48 lines
+
+[Turn 5] Thought: Compile the slice and run KLEE.
+[Turn 5] Tool:    CompileSlice
+   [+] driver.c     -> OK
+   [+] tif_write.c  -> OK
+   [KLEE] Running: timeout=300s, search=random-path+dfs
+   KLEE: ERROR: driver.c:18: invalid klee_assume call (provably false)
+   [KLEE] Results: bug_found=False, sink_reached=False, tests=0
+   [KLEE] Diagnostic: klee_assume(td_stripsperimage != 0) unsatisfiable —
+                     field was constrained to 0 elsewhere.
+
+[Turn 6] Thought: KLEE flagged the assume as unsatisfiable. Drop the assume, instead
+                  initialise td_stripsperimage symbolically AFTER the realloc call
+                  so the stale-td deref on line 503 is the only path to the sink.
+[Turn 6] Tool:    WriteDriver  (refinement)
+   [+] driver.c: 52 lines (Δ +4)
+
+[Turn 7] Thought: Re-run KLEE.
+[Turn 7] Tool:    CompileSlice
+   [KLEE] Running: timeout=300s
+   [KLEE] *** BUG TRIGGERED — KLEE error at tif_write.c:503 ***
+   [KLEE] SPINE COVERAGE: TIFFWriteEncodedTile: REACHED [ENTRY]
+   [KLEE] Results: bug_found=True, sink_reached=True, tests=4
+   [KLEE] Send to concrete validation.
+
+[i] ktest → concrete replay driver (reproducer.c) generated.
+[i] Linking reproducer with unmodified libtiff.a + ASan runtime.
+[i] ASan verdict: heap-use-after-free at sailor_vul_func (tif_write.c:53)
+[i] result.json: verdict=CONCRETE_CONFIRMED

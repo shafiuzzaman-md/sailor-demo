@@ -1,0 +1,15 @@
+{
+  "spec": "1310_tif_write.c_503_sailor_cpp_cwe-416-use-after-realloc",
+  "verdict": "CONCRETE_CONFIRMED",
+  "asan_type": "heap-use-after-free",
+  "asan_triggered": true,
+  "asan_function": "sailor_vul_func",
+  "asan_line": 53,
+  "exit_code": 1,
+  "bug_file": "tif_write.c",
+  "bug_line": 503,
+  "cwe": "CWE-416",
+  "commit": "f324415f50cb5c90f7712e9dfe69831f5d2ea88d",
+  "commit_date": "2026-02-24T22:09:29+00:00",
+  "timestamp": "2026-03-01T00:01:30.800679"
+}

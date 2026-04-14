@@ -1,0 +1,50 @@
+{
+  "id": "sailor_cpp_cwe-416-use-after-realloc@tif_write.c:503",
+  "project": "libtiff_f324415_vul",
+  "rule_id": "sailor/cpp/cwe-416-use-after-realloc",
+  "family": "GENERIC",
+  "file": "libtiff/tif_write.c",
+  "line": 503,
+  "column": 32,
+  "end_line": 503,
+  "end_column": 32,
+  "message": "Potential use-after-realloc: 'td' may be stale after grow call to '_TIFFReserveLargeEnoughWriteBuffer()'.",
+  "cwe": ["CWE-416"],
+  "severity": "error",
+  "precision": "low",
+  "context": {
+    "contextStart": 480,
+    "contextEnd": 520,
+    "snippet": "    if (td->td_compression == COMPRESSION_NONE)\n    {\n        tif->tif_postdecode(tif, (uint8_t *)data, cc);\n        ...\n    }\n\n    sample = (uint16_t)(tile / td->td_stripsperimage);   /* <-- line 503: stale td */\n    if (!(*tif->tif_preencode)(tif, sample))\n        return ((tmsize_t)(-1));"
+  },
+  "target_statement": {
+    "text": "sample = (uint16_t)(tile / td->td_stripsperimage);",
+    "line": 503,
+    "column_start": 32,
+    "column_end": 32
+  },
+  "facts": {
+    "suspect_calls": [
+      {"name": "_TIFFReserveLargeEnoughWriteBuffer", "line": 457, "may_realloc": true}
+    ],
+    "pointer_vars": [
+      {"name": "td", "type": "TIFFDirectory *", "origin_line": 450, "aliases_field": "tif->tif_dir"}
+    ],
+    "length_vars": [],
+    "bounds_hints": []
+  },
+  "llm_hints": {
+    "entrypoint": {
+      "strategy": "LLM_INFER",
+      "candidates": ["TIFFWriteEncodedTile"]
+    },
+    "assertions": {
+      "presence_assertion_hint": "/* model: td must still alias tif->tif_dir at line 503 */",
+      "reachability_assertion": "klee_assert(0);  /* must be placed immediately before the vulnerable instruction */"
+    },
+    "notes": [
+      "Non-in-path helpers (tif_preencode, tif_encodetile, tif_postencode) are stub candidates.",
+      "Groom TIFFDirectory and TIFF structs to avoid null derefs before line 503."
+    ]
+  }
+}
