@@ -186,21 +186,6 @@ s13() {
     column -t -s$'\t' < "$DATA/confirmed_summary.tsv" 2>/dev/null || cat "$DATA/confirmed_summary.tsv"
 }
 
-s14() {
-    section "Output Artifact Structure"
-    echo -e "${GREEN}\$ ls -la data/harness/${RESET}"
-    echo ""
-    ls -la "$HARNESS/"
-    echo ""
-    echo -e "${GREEN}\$ ls -la data/concrete/${RESET}"
-    echo ""
-    ls -la "$CONCRETE/"
-    echo ""
-    echo -e "${GREEN}\$ ls -la data/fuzz/${RESET}"
-    echo ""
-    ls -la "$FUZZ/"
-}
-
 s15() {
     section "Summary — SAILOR Input & Output Package"
     echo -e "${BOLD}Input (per target project):${RESET}"
@@ -217,7 +202,7 @@ s15() {
     echo "  - Fuzz harness + crash  (fuzz_harness.c, fuzz_asan_output.txt)"
 }
 
-SECTIONS=(s0 s1 s2 s3 s4 s5 s5b s6 s7 s8 s6b s9 s10 s11 s12 s13 s14 s15)
+SECTIONS=(s0 s1 s2 s3 s4 s5 s5b s6 s7 s8 s6b s9 s10 s11 s12 s13 s15)
 TOTAL=${#SECTIONS[@]}
 i=0
 
