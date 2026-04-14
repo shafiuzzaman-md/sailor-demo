@@ -58,11 +58,9 @@ s2() {
 }
 
 s2b() {
-    section "CodeQL Rule Pack — SAILOR Queries"
-    echo -e "${YELLOW}SAILOR ships a custom CodeQL pack that extends the stock queries${RESET}"
-    echo -e "${YELLOW}with memory-safety, kernel, and weak-memory-invalidation patterns.${RESET}"
-    echo ""
-    echo -e "${GREEN}\$ ls rules/sailor-queries/queries/${RESET}"
+    section "CodeQL Query Suite — Standard + SAILOR Custom"
+    echo -e "${YELLOW}SAILOR runs the stock CodeQL C/C++ pack (13 queries) alongside${RESET}"
+    echo -e "${YELLOW}its own custom pack (21 queries) — 34 total in the suite.${RESET}"
     echo ""
     cat "$DATA/rules_list.txt"
 }

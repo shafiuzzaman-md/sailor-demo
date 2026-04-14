@@ -1,27 +1,75 @@
-rules/sailor-queries/queries/
-├── CWE-120_BufferOverflow.ql
-├── CWE-120_StackBufferOverflow_SprintfSnprintf.ql
-├── CWE-125_CursorLookaheadRead_MissingRemainingBytesCheck.ql
-├── CWE-125_OutOfBoundsRead.ql
-├── CWE-416_UseAfterFree_FreeThenCallArg.ql
-├── CWE-416_UseAfterFree_FreeThenDeref.ql
-├── CWE-416_UseAfterFree_FreeThenReturn.ql
-├── CWE-416_UseAfterFree_FreeThenUse.ql
-├── CWE-416_UseAfterFree_LookupRemoveUse.ql
-├── CWE-416_UseAfterRealloc.ql                  ← used in this demo
-├── CWE-476_NullDeref_UncheckedReturn.ql
-├── CWE-674_UncontrolledRecursion.ql
-├── CWE-787_OutOfBoundsWrite.ql
-├── CWE-823_OutOfRangePointerOffset.ql
-├── KernelExploitTarget_FuncPtrInReclaimableStruct.ql
-├── KernelLifecycleMismatch_DeviceRefcount.ql
-├── WMI-1_StaleReference_FreeWithoutInvalidation.ql
-├── WMI-1b_StaleReference_IncompleteUnlink.ql
-├── WMI-2_TypeConfusionLeak_StaleDeref.ql
-├── WMI-3_ArbitraryFree_StaleTraversal.ql
-└── WMI-4_WriteWhatWhere_ReclaimOverwrite.ql
+SAILOR CodeQL query suite (rules/sailor-queries/suites/sailor.qls)
+================================================================
 
-21 queries total:
-  - Classic memory-safety CWEs  (120, 125, 416, 476, 674, 787, 823)
-  - Kernel-specific patterns     (KernelExploitTarget, KernelLifecycleMismatch)
-  - Weak-Memory-Invalidation     (WMI-1 … WMI-4)
+─── Standard CodeQL C/C++ queries (codeql/cpp-queries) ──────────
+Memory Corruption
+  cpp/overflow-buffer
+  cpp/invalid-pointer-deref
+  cpp/static-buffer-overflow
+  cpp/offset-use-before-range-check
+  cpp/unbounded-write
+  cpp/overrun-read
+
+Integer Overflow
+  cpp/integer-multiplication-overflow
+  cpp/allocation-size-overflow
+  cpp/comparison-with-wider-type
+  cpp/signed-overflow-check
+
+Use-After-Free / Double-Free / Stack-Return
+  cpp/use-after-free                        (CWE-416)
+  cpp/double-free                           (CWE-415)
+  cpp/return-stack-allocated-memory         (CWE-562)
+
+─── SAILOR custom queries (rules/sailor-queries/queries/) ───────
+Buffer Issues
+  CWE-120_BufferOverflow.ql
+  CWE-120_StackBufferOverflow_SprintfSnprintf.ql
+  CWE-125_OutOfBoundsRead.ql
+  CWE-125_CursorLookaheadRead_MissingRemainingBytesCheck.ql
+  CWE-787_OutOfBoundsWrite.ql
+  CWE-823_OutOfRangePointerOffset.ql
+
+NULL-Pointer / Recursion
+  CWE-476_NullDeref_UncheckedReturn.ql
+  CWE-674_UncontrolledRecursion.ql
+
+Use-After-Free family
+  CWE-416_UseAfterFree_FreeThenDeref.ql
+  CWE-416_UseAfterFree_FreeThenUse.ql
+  CWE-416_UseAfterFree_FreeThenCallArg.ql
+  CWE-416_UseAfterFree_LookupRemoveUse.ql
+  CWE-416_UseAfterFree_FreeThenReturn.ql
+  CWE-416_UseAfterRealloc.ql                ← used in this demo
+
+Weird-Machine-Instruction (exploitation primitives)
+  WMI-1_StaleReference_FreeWithoutInvalidation.ql
+  WMI-1b_StaleReference_IncompleteUnlink.ql
+  WMI-2_TypeConfusionLeak_StaleDeref.ql
+  WMI-3_ArbitraryFree_StaleTraversal.ql
+  WMI-4_WriteWhatWhere_ReclaimOverwrite.ql
+
+Kernel-specific
+  KernelLifecycleMismatch_DeviceRefcount.ql
+  KernelExploitTarget_FuncPtrInReclaimableStruct.ql
+
+─── Totals ──────────────────────────────────────────────────────
+  13 standard CodeQL queries  +  21 SAILOR custom queries  =  34
+
+─── Rules that actually fired on libtiff (this demo) ────────────
+  967  local/cpp/cwe-125-cursor-lookahead-missing-bytes-check
+  133  local/cpp/cwe-120-overflow
+   95  local/cpp/cwe-125-oob-read
+   83  sailor/wmi-2-type-confusion-leak
+   82  sailor/kernel-lifecycle-mismatch
+   64  sailor/cpp/cwe-476-unchecked-alloc-deref
+   21  sailor/cpp/cwe-416-use-after-realloc       ← this bug
+   12  sailor/cpp/cwe-120-stack-sprintf-overflow
+    8  local/cpp/cwe-787-oob-write
+    8  local/cpp/cwe-823-pointer-offset
+    5  cpp/offset-use-before-range-check
+    4  sailor/wmi-1-stale-reference-creation
+    4  shafi/cpp/uaf/lookup-remove-use/intra
+    3  shafi/cpp/CWE-416/DirectFreeArgUseFast
+    1  cpp/unbounded-write
+    1  shafi/cpp/uaf/free-then-return/intra.min
