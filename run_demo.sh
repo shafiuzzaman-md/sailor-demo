@@ -215,8 +215,6 @@ s15() {
     echo "  - ASan crash trace      (asan_output.txt)"
     echo "  - Structured result     (result.json)"
     echo "  - Fuzz harness + crash  (fuzz_harness.c, fuzz_asan_output.txt)"
-    echo ""
-    echo -e "${CYAN}Thank you!${RESET}"
 }
 
 SECTIONS=(s0 s1 s2 s3 s4 s5 s5b s6 s7 s8 s6b s9 s10 s11 s12 s13 s14 s15)
